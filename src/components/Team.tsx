@@ -46,13 +46,10 @@ const Team = () => {
       <div className="mb-10">
         <div className="team-fade flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-2">
           <Users className="w-4 h-4 text-black" />
-          <span>TEAM // PORTLAND &amp; BEAVERTON, OREGON</span>
+          <span>Kinton Aerospace Team</span>
         </div>
-        <h2 className="team-fade text-[clamp(1.85rem,3.8vw,3.2rem)] font-bold tracking-tight text-zinc-950 font-sans">
-          Who We Are
-        </h2>
         <p className="team-fade mt-3 max-w-xl text-sm text-zinc-600 leading-relaxed">
-          A team of four engineers based in the Portland / Beaverton, Oregon area, building from first principles.
+          An engineer from Kinton, OR building innovative aerospace solutions.
         </p>
       </div>
 
