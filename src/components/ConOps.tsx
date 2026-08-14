@@ -11,32 +11,32 @@ const steps = [
     icon: Map,
     title: "Disaster Occurs",
     description:
-      "Ground access is limited or the search area is too large for foot and vehicle teams to cover quickly. A staging location is identified — an airport, a stretch of highway, or a cleared field.",
+      "Ground access is limited or the search area is too large for foot and vehicle teams to cover quickly and efficiently. A staging location is identified (can be hundreds of miles away from disaster, ex: a different state)— an airport, a stretch of highway, or a cleared field.",
     note: "Fixed-wing design: staging from a runway or cleared surface is realistic, and 30 hours of coverage matters more than launching from anywhere.",
   },
   {
     number: "02",
     icon: Search,
-    title: "Scout Aircraft Launches",
+    title: "Scout Aircraft Launches / Transits",
     description:
-      "The scout variant launches, transits to destination, then begins a long-endurance search pattern over the affected area, streaming thermal and EO imagery back to responders in real time.",
-    note: "The scout carries a heated nadir EO/thermal camera. It trades payload weight for extra fuel — maximum loiter time is the priority.",
-  },
+      "The scout variant launches, transits to destination. The transit speed is 43 mph, covering ground efficiently while en route to the search area. Operators can setup a staging area far from the disaster site. ",
+    note: "The transit distance affects the operational time on site. A 130 mile transit distance allows for 24 hours of operational time at the search location.",
+    },
   {
     number: "03",
     icon: MapPin,
-    title: "Survivor Located",
+    title: "Operating location reached",
     description:
-      "When a survivor is located, the scout records precise GPS coordinates and relays them to the ground team. The scout continues its search pattern without interruption.",
-    note: "The aircraft can continue searching for up to 30 hours — a single scout covers what would take dozens of short-endurance drone flights.",
+      "Upon arrival the scout begins a long-endurance search pattern over the affected area, streaming thermal and EO imagery back to responders in real time. The scout continuously searches the ground in a systemic autonomus pattern to locate survivors.",
+    note: "The scout carries a heated nadir EO/thermal camera. It trades payload weight for extra fuel; maximum loiter time is the priority. When a survivor is located, the scout records precise GPS coordinates and relays them to the ground team. The scout continues its search pattern without interruption.",
   },
   {
     number: "04",
     icon: Package,
-    title: "Aid Delivery Dispatched",
+    title: "Survivor Located / Aid Delivery Requested",
     description:
-      "An aid-delivery variant is dispatched directly to the located survivor's GPS coordinates — a short, targeted flight rather than a long search — and delivers its two 10 lb aid packages.",
-    note: "Aid packages can include water, medical supplies, and communication devices. A small downward camera precisely matches the drop point to survivor coordinates.",
+      "Upon locating a survivor, the location and imagery is relayed to the ground team. Upon manual approval an aid-delivery variant is dispatched directly to the located survivor's GPS coordinates — a short, targeted flight rather than a long search — and delivers its two 10 lb aid packages. However, the payload aircraft can also be operated in a loiter pattern to reduce the time between sighting and delivery.",
+    note: "Aid packages can include water, medical supplies, and communication devices. A smaller camera payload precisely matches the drop point to survivor coordinates.",
   },
   {
     number: "05",
@@ -45,6 +45,14 @@ const steps = [
     description:
       "The scout aircraft continues its search pattern for up to 30 hours, extending coverage well beyond what a single short-endurance drone or a limited number of crewed helicopter hours could achieve.",
     note: "One aircraft. One tank of gas. A full day of coverage.",
+  },
+    {
+    number: "06",
+    icon: Package,
+    title: "Return to Base",
+    description:
+      "After utilizing its operational time on site, each aircraft returns to the staging location from which it launched, recieves a quick maintenence check and refuel before being able to be redeployed for another mission.",
+    note: "Aircraft downtime can be as short as 30 minutes.",
   },
 ];
 

@@ -43,7 +43,7 @@ const About = () => {
           The Visibility Gap in Disaster Response
         </h2>
         <div className="about-fade text-[clamp(1.4rem,3vw,2.75rem)] font-light text-zinc-900 leading-snug tracking-tight">
-          After a disaster — an earthquake, a flood, a hurricane — the first hours matter most, and they&apos;re often the hours when search teams have the least visibility. What&apos;s needed is something that can fly for most of a day, cover enormous ground, and either find people or bring them what they need.
+          After a disaster — an earthquake, a flood, a hurricane — the first hours matter most, and they&apos;re often the hours when search teams have the least visibility. What&apos;s needed is something that can fly for most of a day, cover enormous ground, and can find people and bring them what they need.
         </div>
       </div>
 
@@ -53,7 +53,7 @@ const About = () => {
           Helicopters are expensive to keep aloft for long stretches. Small consumer drones run out of battery in twenty minutes. There is a gap in the middle — long-endurance, sensor-capable aircraft that can be deployed from a cleared field or stretch of highway — that no existing product fills for public safety agencies.
         </p>
         <p>
-          This project targets that gap directly. A twin-boom, V-tail fixed-wing aircraft powered by a small hybrid-electric system that pairs a gasoline generator with a battery buffer — giving it the endurance of a gas engine with the control and quiet reliability of electric propulsion.
+          This project targets that gap directly. A twin-boom, V-tail fixed-wing aircraft powered by a small hybrid-electric system that pairs a gasoline generator with a battery buffer — giving it the endurance of a gas engine with the efficiency and reliability of electric propulsion.
         </p>
       </div>
 
@@ -81,6 +81,24 @@ const About = () => {
         <div className="about-fade p-8 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-400 transition-colors flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <h3 className="text-xl font-bold text-zinc-950 mb-2 font-sans tracking-tight">
+              The Gap We Target
+            </h3>
+            <p className="text-sm text-zinc-600 leading-relaxed font-sans">
+              No affordable, fielded aircraft combines day-scale endurance with sensor capability and aid delivery in a platform that can be staged without a runway. That is precisely the mission this aircraft is designed for.
+            </p>
+          </div>
+          <div className="mt-6 pt-4 border-t border-zinc-200 text-xs font-semibold text-zinc-900 uppercase tracking-wider">
+            30 hrs / standard runway
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div className="about-fade p-8 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-400 transition-colors flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
               <Battery className="w-5 h-5" />
             </div>
             <h3 className="text-xl font-bold text-zinc-950 mb-2 font-sans tracking-tight">
@@ -92,24 +110,6 @@ const About = () => {
           </div>
           <div className="mt-6 pt-4 border-t border-zinc-200 text-xs font-semibold text-zinc-900 uppercase tracking-wider">
             20–40 min battery limit
-          </div>
-        </div>
-
-        {/* Card 3 */}
-        <div className="about-fade p-8 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-400 transition-colors flex flex-col justify-between">
-          <div>
-            <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
-              <AlertTriangle className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold text-zinc-950 mb-2 font-sans tracking-tight">
-              The Gap We Target
-            </h3>
-            <p className="text-sm text-zinc-600 leading-relaxed font-sans">
-              No affordable, fielded aircraft combines day-scale endurance with sensor capability and aid delivery in a platform that can be staged without a runway. That is precisely the mission this aircraft is designed for.
-            </p>
-          </div>
-          <div className="mt-6 pt-4 border-t border-zinc-200 text-xs font-semibold text-zinc-900 uppercase tracking-wider">
-            30 hrs / runway-optional
           </div>
         </div>
       </div>
