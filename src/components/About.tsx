@@ -3,18 +3,14 @@
 import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
-import Slider from "./Slider";
-import { Shield, Compass, Wind, Layers, Crosshair } from "lucide-react";
+import { AlertTriangle, Battery, Plane } from "lucide-react";
 
 const About = () => {
-  const bioText = `SAR (Search and Rescue) crews and tactical defense operators face an impossible dilemma: multirotor drones run out of battery in 40 minutes, while traditional fixed-wing aircraft require runways that do not exist in remote emergencies. Kinton Aerospace is engineering from first principles to eliminate this tradeoff with our maiden hybrid fixed-wing VTOL platform.`;
-
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
-
     gsap.from(".about-fade", {
       opacity: 0,
       y: 24,
@@ -37,77 +33,110 @@ const About = () => {
     >
       {/* Top Header Tag */}
       <div className="about-fade flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-6">
-        <Compass className="w-4 h-4 text-black" />
-        <span>THE STRATEGIC IMPERATIVE // SAR & DEFENSE AVIATION</span>
+        <AlertTriangle className="w-4 h-4 text-black" />
+        <span>THE PROBLEM // WHY SAR NEEDS A BETTER AIRCRAFT</span>
       </div>
 
-      {/* Main Mission Text */}
+      {/* Main Text */}
       <div className="max-w-5xl space-y-4">
         <h2 className="about-fade text-xs uppercase tracking-widest text-zinc-400 font-sans font-semibold">
-          Bridging Range and Runway Independence
+          The Visibility Gap in Disaster Response
         </h2>
-
         <div className="about-fade text-[clamp(1.4rem,3vw,2.75rem)] font-light text-zinc-900 leading-snug tracking-tight">
-          {bioText}
+          After a disaster — an earthquake, a flood, a hurricane — the first hours matter most, and they&apos;re often the hours when search teams have the least visibility. What&apos;s needed is something that can fly for most of a day, cover enormous ground, and either find people or bring them what they need.
         </div>
       </div>
 
-      {/* 3 Core Engineering Pillars */}
+      {/* Narrative paragraphs */}
+      <div className="about-fade mt-10 max-w-3xl space-y-5 text-zinc-700 text-base leading-relaxed">
+        <p>
+          Helicopters are expensive to keep aloft for long stretches. Small consumer drones run out of battery in twenty minutes. There is a gap in the middle — long-endurance, sensor-capable aircraft that can be deployed from a cleared field or stretch of highway — that no existing product fills for public safety agencies.
+        </p>
+        <p>
+          This project targets that gap directly. A twin-boom, V-tail fixed-wing aircraft powered by a small hybrid-electric system that pairs a gasoline generator with a battery buffer — giving it the endurance of a gas engine with the control and quiet reliability of electric propulsion.
+        </p>
+      </div>
+
+      {/* 3 Problem Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        {/* Card 1 */}
         <div className="about-fade p-8 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-400 transition-colors flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
-              <Wind className="w-5 h-5" />
+              <Plane className="w-5 h-5" />
             </div>
             <h3 className="text-xl font-bold text-zinc-950 mb-2 font-sans tracking-tight">
-              Runway-Independent VTOL
+              Crewed Helicopters
             </h3>
             <p className="text-sm text-zinc-600 leading-relaxed font-sans">
-              Vertical takeoff and landing capability allows deployment directly from forest clearings, vessel decks, or alpine passes without launch rails or runways.
+              Expensive to operate, limited by crew fatigue, and impossible to keep aloft continuously over a multi-day search. An hour of helicopter time can cost thousands of dollars — and there are rarely enough of them.
             </p>
           </div>
           <div className="mt-6 pt-4 border-t border-zinc-200 text-xs font-semibold text-zinc-900 uppercase tracking-wider">
-            Zero Ground Infrastructure
+            High cost, limited hours
           </div>
         </div>
 
+        {/* Card 2 */}
         <div className="about-fade p-8 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-400 transition-colors flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
-              <Layers className="w-5 h-5" />
+              <Battery className="w-5 h-5" />
             </div>
             <h3 className="text-xl font-bold text-zinc-950 mb-2 font-sans tracking-tight">
-              14+ Hour Hybrid Endurance
+              Consumer &amp; Prosumer Drones
             </h3>
             <p className="text-sm text-zinc-600 leading-relaxed font-sans">
-              Transitioning from vertical lift to aerodynamically clean fixed-wing flight powered by an onboard hybrid generator unlocks unmatched persistent airborne loiter.
+              Battery-only multirotors cover 20–40 minutes per charge. Covering even a modest search area requires constant crew rotation, transport back to base, and repeated redeployments — losing coverage in the process.
             </p>
           </div>
           <div className="mt-6 pt-4 border-t border-zinc-200 text-xs font-semibold text-zinc-900 uppercase tracking-wider">
-            Turbine-Electric Powertrain
+            20–40 min battery limit
           </div>
         </div>
 
+        {/* Card 3 */}
         <div className="about-fade p-8 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-400 transition-colors flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
-              <Shield className="w-5 h-5" />
+              <AlertTriangle className="w-5 h-5" />
             </div>
             <h3 className="text-xl font-bold text-zinc-950 mb-2 font-sans tracking-tight">
-              Modular Mission Architecture
+              The Gap We Target
             </h3>
             <p className="text-sm text-zinc-600 leading-relaxed font-sans">
-              Rapidly interchangeable nose and ventral payload pods accommodate gyro-stabilized thermal FLIR gimbals, emergency life-raft drops, or tactical electronic sensors.
+              No affordable, fielded aircraft combines day-scale endurance with sensor capability and aid delivery in a platform that can be staged without a runway. That is precisely the mission this aircraft is designed for.
             </p>
           </div>
           <div className="mt-6 pt-4 border-t border-zinc-200 text-xs font-semibold text-zinc-900 uppercase tracking-wider">
-            Multi-Mission Flexibility
+            30 hrs / runway-optional
           </div>
         </div>
       </div>
 
-      {/* Concept & CAD Draggable Gallery */}
-      <Slider />
+      {/* Supporting stat row */}
+      <div className="about-fade mt-14 pt-10 border-t border-zinc-200 grid grid-cols-2 md:grid-cols-4 gap-8 text-left">
+        <div>
+          <div className="text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-zinc-950 font-mono">72</div>
+          <div className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Hour golden window</div>
+          <div className="text-xs text-zinc-400 mt-0.5">After a disaster, survival odds drop sharply</div>
+        </div>
+        <div>
+          <div className="text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-zinc-950 font-mono">~30</div>
+          <div className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">hrs endurance target</div>
+          <div className="text-xs text-zinc-400 mt-0.5">On 4 gallons of gasoline</div>
+        </div>
+        <div>
+          <div className="text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-zinc-950 font-mono">20</div>
+          <div className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">min avg drone time</div>
+          <div className="text-xs text-zinc-400 mt-0.5">Typical battery-powered UAS</div>
+        </div>
+        <div>
+          <div className="text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-zinc-950 font-mono">2</div>
+          <div className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Roles, one airframe</div>
+          <div className="text-xs text-zinc-400 mt-0.5">Scout + aid-delivery variants</div>
+        </div>
+      </div>
     </section>
   );
 };

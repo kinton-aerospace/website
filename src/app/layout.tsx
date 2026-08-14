@@ -24,23 +24,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kinton Aerospace | Long-Range Hybrid Fixed-Wing SAR & Military Drones",
+  title: "Kinton Aerospace | Long-Endurance Hybrid-Electric SAR UAS",
   description:
-    "Kinton Aerospace engineers and manufactures industry-leading long-range hybrid fixed-wing UAVs for critical Search & Rescue (SAR), maritime patrol, and defense operations.",
+    "Kinton Aerospace is building a 30-hour hybrid-electric fixed-wing UAS for search-and-rescue and disaster response — covering vast areas when it matters most.",
   keywords: [
     "Kinton Aerospace",
-    "Hybrid Fixed Wing Drone",
-    "Military UAV",
-    "Search and Rescue Drones",
-    "Long-range VTOL UAV",
-    "Autonomous Defense Aviation",
-    "Maritime Reconnaissance Drone",
+    "Search and Rescue Drone",
+    "Hybrid Electric UAS",
+    "Fixed Wing SAR Aircraft",
+    "Disaster Response UAV",
+    "Long Endurance Drone",
+    "BVLOS UAS Oregon",
+    "Aid Delivery Drone",
   ],
   authors: [{ name: "Kinton Aerospace Engineering" }],
   openGraph: {
-    title: "Kinton Aerospace | Autonomous Hybrid Flight Systems",
+    title: "Kinton Aerospace | Eyes in the Sky for the Hours That Matter Most",
     description:
-      "Next-generation hybrid VTOL fixed-wing drones engineered for extreme endurance SAR and defense missions.",
+      "A 30-hour hybrid-electric fixed-wing aircraft built for search-and-rescue and disaster response — scouting for survivors and delivering aid directly to them.",
     type: "website",
   },
 };

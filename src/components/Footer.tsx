@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { Send, CheckCircle, Mail, Users, ArrowUpRight } from "lucide-react";
+import { Send, CheckCircle, Mail, Radio } from "lucide-react";
 
 const Footer = () => {
   const footerRef = useRef<HTMLDivElement | null>(null);
@@ -12,15 +12,13 @@ const Footer = () => {
     name: "",
     org: "",
     email: "",
-    inquiryType: "Early Pilot & Field Trials Partner",
+    inquiryType: "Public Safety Agency Partnership",
     message: "",
   });
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
     if (!footerRef.current) return;
-
     const ctx = gsap.context(() => {
       gsap.from(".footer-fade", {
         opacity: 0,
@@ -35,7 +33,6 @@ const Footer = () => {
         },
       });
     }, footerRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -52,26 +49,26 @@ const Footer = () => {
     >
       {/* Top Contact Form Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-zinc-200">
-        {/* Left Column: Startup Overview & Direct Lines */}
+        {/* Left Column */}
         <div className="lg:col-span-5 space-y-8 footer-fade">
           <div>
             <div className="text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-2 font-sans">
-              DIRECT ENGAGEMENT // FOUNDING TEAM
+              CONTACT // KINTON AEROSPACE
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold font-sans tracking-tight text-zinc-950">
-              Build the Future of Autonomous Aviation
+              Let&apos;s Build This Together
             </h2>
             <p className="text-sm text-zinc-600 mt-3 leading-relaxed font-sans">
-              Whether you are a search & rescue organization seeking early flight trials, a defense innovator, an engineer looking to join our founding team, or an investor, we would love to connect.
+              Whether you are a search &amp; rescue agency seeking early flight trials, a grant program or investor, an engineer looking to contribute, or press — we would love to connect.
             </p>
           </div>
 
-          {/* Contact Direct Lines */}
+          {/* Direct Lines */}
           <div className="space-y-3 text-xs font-sans">
             <div className="flex items-start gap-3 p-4 rounded-xl bg-zinc-50 border border-zinc-200">
               <Mail className="w-4 h-4 text-black mt-0.5" />
               <div>
-                <div className="text-zinc-500 font-medium">FOUNDING TEAM & GENERAL INQUIRIES</div>
+                <div className="text-zinc-500 font-medium">GENERAL INQUIRIES &amp; PARTNERSHIPS</div>
                 <a
                   href="mailto:founders@kinton-aerospace.com"
                   className="text-zinc-950 font-semibold hover:underline mt-0.5 block"
@@ -82,14 +79,14 @@ const Footer = () => {
             </div>
 
             <div className="flex items-start gap-3 p-4 rounded-xl bg-zinc-50 border border-zinc-200">
-              <Users className="w-4 h-4 text-black mt-0.5" />
+              <Radio className="w-4 h-4 text-black mt-0.5" />
               <div>
-                <div className="text-zinc-500 font-medium">ENGINEERING & CAREERS</div>
+                <div className="text-zinc-500 font-medium">PUBLIC SAFETY &amp; AGENCY PARTNERSHIPS</div>
                 <a
-                  href="mailto:careers@kinton-aerospace.com"
+                  href="mailto:sar@kinton-aerospace.com"
                   className="text-zinc-950 font-semibold hover:underline mt-0.5 block"
                 >
-                  careers@kinton-aerospace.com
+                  sar@kinton-aerospace.com
                 </a>
               </div>
             </div>
@@ -100,20 +97,18 @@ const Footer = () => {
         <div className="lg:col-span-7 footer-fade">
           <div className="p-6 sm:p-8 rounded-xl bg-zinc-50 border border-zinc-200">
             <h3 className="text-xl font-bold font-sans text-zinc-950 mb-1">
-              Contact Kinton Aerospace
+              Send a Message
             </h3>
             <p className="text-xs text-zinc-500 mb-6 font-sans">
-              Send us a direct transmission. Our founding engineering team will respond.
+              Tell us about your interest. We respond to every genuine inquiry.
             </p>
 
             {formSubmitted ? (
               <div className="p-6 rounded-lg bg-white border border-zinc-300 text-center space-y-3">
                 <CheckCircle className="w-10 h-10 text-black mx-auto" />
-                <h4 className="text-lg font-bold font-sans text-zinc-950">
-                  Message Received
-                </h4>
+                <h4 className="text-lg font-bold font-sans text-zinc-950">Message Received</h4>
                 <p className="text-xs text-zinc-600 max-w-sm mx-auto font-sans">
-                  Thank you for contacting Kinton Aerospace. Our team will review your inquiry and follow up shortly.
+                  Thank you for reaching out to Kinton Aerospace. We&apos;ll follow up shortly.
                 </p>
                 <button
                   type="button"
@@ -139,14 +134,13 @@ const Footer = () => {
                       className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-zinc-300 text-zinc-900 focus:outline-none focus:border-black transition-colors"
                     />
                   </div>
-
                   <div>
                     <label className="block text-zinc-700 font-semibold mb-1.5 uppercase tracking-wider text-[10px]">
-                      ORGANIZATION / AFFILIATION
+                      ORGANIZATION
                     </label>
                     <input
                       type="text"
-                      placeholder="SAR Agency / Defense / Independent"
+                      placeholder="Agency / Company / Independent"
                       value={formData.org}
                       onChange={(e) => setFormData({ ...formData, org: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-zinc-300 text-zinc-900 focus:outline-none focus:border-black transition-colors"
@@ -162,27 +156,28 @@ const Footer = () => {
                     <input
                       required
                       type="email"
-                      placeholder="your.email@organization.com"
+                      placeholder="your@email.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-zinc-300 text-zinc-900 focus:outline-none focus:border-black transition-colors"
                     />
                   </div>
-
                   <div>
                     <label className="block text-zinc-700 font-semibold mb-1.5 uppercase tracking-wider text-[10px]">
-                      INQUIRY TRACK
+                      INQUIRY TYPE
                     </label>
                     <select
                       value={formData.inquiryType}
                       onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-zinc-300 text-zinc-900 focus:outline-none focus:border-black transition-colors"
                     >
-                      <option value="Early Pilot & Field Trials Partner">Early Pilot & Field Trials Partner</option>
-                      <option value="Engineering & Founding Team Roles">Engineering & Founding Team Roles</option>
-                      <option value="Investor / Seed Deck Request">Investor / Seed Deck Request</option>
-                      <option value="Sensor & Payload Integration">Sensor & Payload Integration</option>
-                      <option value="General Inquiries">General Inquiries</option>
+                      <option value="Public Safety Agency Partnership">Public Safety Agency Partnership</option>
+                      <option value="BVLOS Co-Sponsorship">BVLOS Co-Sponsorship</option>
+                      <option value="SBIR / STTR / Grant Funding">SBIR / STTR / Grant Funding</option>
+                      <option value="Investor Inquiry">Investor Inquiry</option>
+                      <option value="Engineering / Joining the Team">Engineering / Joining the Team</option>
+                      <option value="Press & Media">Press &amp; Media</option>
+                      <option value="General Inquiry">General Inquiry</option>
                     </select>
                   </div>
                 </div>
@@ -193,7 +188,7 @@ const Footer = () => {
                   </label>
                   <textarea
                     rows={4}
-                    placeholder="Tell us about your mission requirements, engineering background, or partnership objectives..."
+                    placeholder="Tell us about your mission, interest, or questions..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-zinc-300 text-zinc-900 focus:outline-none focus:border-black transition-colors resize-none"
@@ -205,7 +200,7 @@ const Footer = () => {
                   className="w-full py-3.5 px-6 rounded-lg bg-black hover:bg-zinc-800 text-white font-bold font-sans text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
-                  <span>TRANSMIT INQUIRY</span>
+                  <span>SEND MESSAGE</span>
                 </button>
               </form>
             )}
@@ -227,14 +222,14 @@ const Footer = () => {
       {/* Bottom Sub-footer */}
       <div className="pt-6 border-t border-zinc-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-sans text-zinc-500">
         <div>
-          © {new Date().getFullYear()} Kinton Aerospace Inc. All Rights Reserved.
+          © {new Date().getFullYear()} Kinton Aerospace. Oregon Public-Benefit LLC. All Rights Reserved.
         </div>
         <div className="flex gap-6 uppercase tracking-wider text-[10px]">
-          <span>HYBRID VTOL AUTONOMY</span>
+          <span>HYBRID-ELECTRIC SAR UAS</span>
           <span>•</span>
-          <span>SEARCH & RESCUE</span>
+          <span>DISASTER RESPONSE</span>
           <span>•</span>
-          <span>DEFENSE AVIATION</span>
+          <span>PORTLAND, OR</span>
         </div>
       </div>
     </footer>

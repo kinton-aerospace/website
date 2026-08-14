@@ -1,147 +1,186 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { DroneMediaPlaceholder } from "./DroneMediaPlaceholder";
-import { Plane, Check, ArrowUpRight } from "lucide-react";
+import { Layers, Zap, Battery, Cpu, Package } from "lucide-react";
 
-interface DroneModule {
-  id: string;
-  name: string;
-  category: string;
-  stage: string;
-  tagline: string;
-  description: string;
-  specs: {
-    endurance: string;
-    range: string;
-    payload: string;
-    speed: string;
-  };
-  media: {
-    type: "image" | "video";
-    src: string;
-    label: string;
-    badge: string;
-  };
-  subsystems: string[][];
-}
-
-const prototypeModules: DroneModule[] = [
-  {
-    id: "01",
-    name: "PROJECT K-1 ALPHA",
-    category: "MAIDEN HYBRID FIXED-WING PROTOTYPE",
-    stage: "IN PRE-PRODUCTION & ASSEMBLY",
-    tagline: "Our first 1:1 scale hybrid VTOL fixed-wing prototype.",
-    description:
-      "The flagship development aircraft of Kinton Aerospace. Designed to bridge vertical takeoff accessibility with long-range fixed-wing glide. Built around a carbon-composite airframe and hybrid turbine-electric powertrain.",
-    specs: {
-      endurance: "14+ Hours Target",
-      range: "450 KM Reach",
-      payload: "10 KG Modular Bay",
-      speed: "140 Kts Cruise",
-    },
-    media: {
-      type: "video",
-      src: "/drone-media/k1-alpha-prototype.mp4",
-      label: "PROJECT K-1 ALPHA PROTOTYPE FOOTAGE",
-      badge: "1:1 FULL-SCALE CAD & ASSEMBLY",
-    },
-    subsystems: [
-      ["Tilt-Rotor VTOL Actuation", "Carbon-Composite Monocoque", "High-Lift Swept Airfoil", "Zero-Runway Liftoff"],
-      ["Hybrid Electric Generator", "Quick-Swap Battery Pack", "Ultra-Low Thermal Sig", "Cold-Weather De-Ice"],
-      ["Maritime SAR Surveillance", "Alpine Emergency Search", "Disaster Reconnaissance", "Tactical Overwatch"],
-    ],
-  },
-  {
-    id: "02",
-    name: "SUB-SCALE TEST ARTICLE (K-1X)",
-    category: "AERODYNAMIC FLIGHT ENVELOPE TESTER",
-    stage: "ACTIVE SUBSCALE TESTING",
-    tagline: "Validating VTOL-to-cruise transition dynamics.",
-    description:
-      "A rapid-iteration subscale flight article used to validate aerodynamic control laws, transition stall margins, and autonomous flight controller algorithms in real-world wind conditions.",
-    specs: {
-      endurance: "45 Min Battery Test",
-      range: "15 KM Telemetry Link",
-      payload: "Telemetry & IMU Suite",
-      speed: "95 Kts Peak Speed",
-    },
-    media: {
-      type: "video",
-      src: "/drone-media/k1x-subscale-flight.mp4",
-      label: "K-1X SUBSCALE FLIGHT TEST FOOTAGE",
-      badge: "FLIGHT ENVELOPE TRIALS",
-    },
-    subsystems: [
-      ["Transition Control Laws", "Dynamic Tilt Calibration", "Flight Envelope Mapping", "Real-Time Telemetry Log"],
-      ["Rapid 3D Print / Carbon", "Modular Motor Mounts", "IMU & Pitot Tube Array", "High-G Recovery Chute"],
-      ["Hover-to-Cruise Validation", "Crosswind Stability Trials", "Autonomous Waypoint Mesh", "Fail-Safe RTL Trials"],
-    ],
-  },
-  {
-    id: "03",
-    name: "MODULAR SAR PAYLOAD POD",
-    category: "SEARCH & RESCUE MISSION BAY",
-    stage: "PAYLOAD SPECIFICATION PHASE",
-    tagline: "Interchangeable nose & ventral payload pods.",
-    description:
-      "A modular bay architecture designed for rapid mission reconfiguration. Supports gyro-stabilized dual EO/IR thermal gimbals for nighttime survivor detection and drop-capable emergency locator beacons.",
-    specs: {
-      endurance: "Continuous Power Bus",
-      range: "Dual Sensor Gimbal",
-      payload: "10 KG Max Payload",
-      speed: "All-Weather Sealing",
-    },
-    media: {
-      type: "image",
-      src: "/drone-media/sar-payload-pod.jpg",
-      label: "SAR PAYLOAD POD CAD PLACEHOLDER",
-      badge: "EO/IR + BEACON DROP BAY",
-    },
-    subsystems: [
-      ["Dual Optical + Thermal FLIR", "AI Survivor Heat Tracker", "Emergency Beacon Ejection", "Inflatable Life-Raft Release"],
-      ["Mil-Spec Quick Disconnect", "CAN-FD Interface Bus", "Active Gimbal Damping", "Salt-Spray IP67 Sealing"],
-      ["Lost Vessel Localization", "Mountain Climber Beacon", "Flood Disaster Survey", "Wildfire Thermal Mapping"],
-    ],
-  },
-  {
-    id: "04",
-    name: "AUTONOMOUS GCS & FLIGHT CONTROLLER",
-    category: "FLIGHT SOFTWARE & AVIONICS",
-    stage: "HARDWARE-IN-THE-LOOP SIMULATION",
-    tagline: "Resilient autonomous guidance and BVLOS link.",
-    description:
-      "Custom flight control software incorporating Visual Inertial Odometry for GPS-denied navigation, automated fail-safe return-to-base, and an intuitive ground control tactical map interface.",
-    specs: {
-      endurance: "Real-Time RTOS",
-      range: "BVLOS SATCOM Mesh",
-      payload: "Triple-Redundant IMU",
-      speed: "Zero-Latency Telemetry",
-    },
-    media: {
-      type: "image",
-      src: "/drone-media/avionics-software-gcs.jpg",
-      label: "GROUND CONTROL INTERFACE PLACEHOLDER",
-      badge: "GPS-DENIED AUTONOMY",
-    },
-    subsystems: [
-      ["Visual Inertial Odometry", "Triple Redundant Sensors", "Automated Return-to-Launch", "Encrypted SATCOM Link"],
-      ["Edge Compute AI Vision", "Obstacle Detection Radar", "Hardware-in-the-Loop Sim", "Open API Fleet Protocol"],
-      ["Single-Operator Control", "Collaborative Search Grid", "Autonomous Geo-Fencing", "Low-Bandwidth Datalink"],
-    ],
-  },
+const tabs = [
+  { id: "airframe", label: "Airframe", icon: Layers },
+  { id: "propulsion", label: "Propulsion", icon: Zap },
+  { id: "power", label: "Power System", icon: Battery },
+  { id: "avionics", label: "Avionics", icon: Cpu },
+  { id: "payload", label: "Payload", icon: Package },
 ];
+
+const tabContent = {
+  airframe: {
+    title: "Twin-Boom, V-Tail Fixed-Wing Airframe",
+    description:
+      "The airframe is the primary driver of endurance. A twin-boom, V-tail configuration — visually similar to the Bayraktar TB2 — pairs structural efficiency with clean aerodynamics. Carbon fiber composite construction throughout keeps weight down without sacrificing strength.",
+    specs: [
+      { label: "Configuration", value: "Twin-boom, V-tail" },
+      { label: "Wingspan", value: "20–22 ft" },
+      { label: "Fuselage", value: "80–90\" length" },
+      { label: "Aspect Ratio", value: "≈17 (glider-class)" },
+      { label: "Airfoil", value: "MH114" },
+      { label: "Construction", value: "Carbon fiber composite" },
+    ],
+    points: [
+      "High-aspect-ratio wing (AR≈17) — closer in proportion to a glider than a typical RC aircraft",
+      "MH114 airfoil selected for lift-to-drag performance in slow, sustained cruise",
+      "Modular payload and generator bay housed internally in the fuselage",
+      "Carbon fiber spars, skins, and fuselage structure throughout",
+    ],
+    media: {
+      type: "image" as const,
+      src: "/drone-media/k1-airframe-cad.jpg",
+      label: "TWIN-BOOM V-TAIL AIRFRAME",
+      badge: "AIRFRAME // CAD BLUEPRINT",
+      flightData: {
+        altitude: "WINGSPAN: 20–22 FT",
+        airspeed: "AR ≈ 17",
+        payload: "85 LB GW",
+        mode: "CARBON COMPOSITE",
+      },
+    },
+  },
+  propulsion: {
+    title: "Push-Pull Redundant Propulsion — No Single Point of Failure",
+    description:
+      "A symmetric push-pull configuration with a front and rear motor, styled after the Cessna Skymaster twin-engine layout. Both motors run continuously throughout the flight — this isn't a get-home backup arrangement, it's a genuine dual-engine redundancy architecture.",
+    specs: [
+      { label: "Configuration", value: "Push-pull, front + rear" },
+      { label: "Front Prop", value: "~24\"" },
+      { label: "Rear Prop", value: "~28\"" },
+      { label: "Cruise Speed", value: "43 mph" },
+      { label: "Motor Class", value: "Sustainer / motorglider" },
+      { label: "Redundancy", value: "Dual ESC, dual winding (rear)" },
+    ],
+    points: [
+      "Both motors run continuously — not a backup system, a true redundancy architecture",
+      "Front and rear props sized for equal disk loading (not equal thrust) to reduce total induced power draw",
+      "Dual ESC / dual winding on rear motor for electrical fault tolerance",
+      "Continuously-running front motor independently covers mechanical failure modes",
+      "Motor selection targets sustainer/motorglider class — optimized for small, steady cruise draw",
+    ],
+    media: {
+      type: "image" as const,
+      src: "/drone-media/k1-propulsion.jpg",
+      label: "PUSH-PULL PROPULSION LAYOUT",
+      badge: "PROPULSION // REDUNDANCY ARCH",
+      flightData: {
+        altitude: "FRONT: ~24\" PROP",
+        airspeed: "REAR: ~28\" PROP",
+        payload: "DUAL ESC / DUAL WIND",
+        mode: "43 MPH CRUISE",
+      },
+    },
+  },
+  power: {
+    title: "Hybrid-Electric Power System — Hours, Not Minutes",
+    description:
+      "A small gasoline engine (Honda GX35-class) runs continuously as an onboard generator, charging a lithium-ion battery buffer that actually powers the motors. Pure battery power tops out at well under an hour for an aircraft like this. A running engine can sustain the mission for a full day on a fixed 4-gallon fuel load.",
+    specs: [
+      { label: "Generator", value: "Honda GX35-class" },
+      { label: "Battery Cells", value: "Molicel P45B" },
+      { label: "Architecture", value: "12S (44.4V)" },
+      { label: "Fuel Capacity", value: "4 gallons gasoline" },
+      { label: "Target Endurance", value: "~30 hours" },
+      { label: "Approach", value: "Active engineering optimization" },
+    ],
+    points: [
+      "Generator runs continuously — battery buffer absorbs power spikes (climb, maneuvering) the small generator can't instantly supply",
+      "30 hr / 4 gal target is a hard fuel budget the team is actively optimizing toward, not a loose estimate",
+      "Molicel P45B cells chosen for high energy density and reliable power delivery",
+      "12S (44.4V) architecture throughout for efficient motor drive",
+      "Honest status: fuel-budget vs. endurance tradeoffs are ongoing engineering work",
+    ],
+    media: {
+      type: "image" as const,
+      src: "/drone-media/hybrid-powertrain-bench.jpg",
+      label: "HYBRID POWER SYSTEM",
+      badge: "POWER // HYBRID GENERATOR",
+      flightData: {
+        altitude: "~30 HR TARGET",
+        airspeed: "4 GAL GASOLINE",
+        payload: "MOLICEL P45B",
+        mode: "12S / 44.4V ARCH",
+      },
+    },
+  },
+  avionics: {
+    title: "Avionics, Autonomy & Connectivity",
+    description:
+      "PX4 open-source flight controller — the same stack used across a wide range of professional and research UAS platforms. Onboard compute pairs a stripped-down Intel NUC with a Raspberry Pi for sensor processing and mission logic.",
+    specs: [
+      { label: "Flight Controller", value: "PX4 open-source" },
+      { label: "Compute", value: "Intel NUC + Raspberry Pi" },
+      { label: "DAA", value: "ADS-B In + 6-camera visual" },
+      { label: "Comms", value: "Satellite / direct-to-cell" },
+      { label: "Connectivity", value: "BVLOS capable" },
+      { label: "Targeting", value: "Beyond-LOS disaster zones" },
+    ],
+    points: [
+      "ADS-B In plus a multi-camera visual system (~6 cameras) for detect-and-avoid in shared airspace",
+      "Satellite-linked connectivity for BVLOS command and telemetry — works even when ground infrastructure is down",
+      "Direct-to-cell satellite comms critical for disaster zones where cellular networks may be destroyed",
+      "PX4 chosen for its proven track record across professional and research UAS programs",
+    ],
+    media: {
+      type: "image" as const,
+      src: "/drone-media/avionics-hil-testing.jpg",
+      label: "AVIONICS & AUTONOMY STACK",
+      badge: "AVIONICS // PX4 + SATCOM",
+      flightData: {
+        altitude: "PX4 FLIGHT CTRL",
+        airspeed: "ADS-B + 6-CAM DAA",
+        payload: "INTEL NUC + RPI",
+        mode: "BVLOS SATCOM LINK",
+      },
+    },
+  },
+  payload: {
+    title: "Two Roles, One Airframe",
+    description:
+      "The aircraft comes in two roles built on a shared design. The scout variant carries long-loiter sensor payloads to search a wide area. The aid-delivery variant carries two 10 lb aid packages directly to a located survivor.",
+    specs: [
+      { label: "Scout Payload", value: "EO/thermal nadir camera" },
+      { label: "Delivery Payload", value: "2 × 10 lb aid packages" },
+      { label: "Total Payload Cap.", value: "~20 lb" },
+      { label: "Scout Camera", value: "Heated nadir sensor window" },
+      { label: "Delivery Camera", value: "Small downward cam for drop precision" },
+      { label: "Interchangeable", value: "Shared airframe, modular bay" },
+    ],
+    points: [
+      "Scout variant: fixed downward-facing EO/thermal camera through heated nadir window — trades payload weight for extra fuel and max loiter",
+      "Aid-delivery variant: ~20 lb payload bay for water, medical kits, communication devices",
+      "Small downward camera on delivery variant to match drop point to survivor GPS coordinates",
+      "Both roles share the same airframe — modular bay enables rapid mission reconfiguration",
+    ],
+    media: {
+      type: "image" as const,
+      src: "/drone-media/sar-payload-pod.jpg",
+      label: "DUAL-ROLE PAYLOAD SYSTEM",
+      badge: "PAYLOAD // SCOUT & DELIVERY",
+      flightData: {
+        altitude: "SCOUT: EO/THERMAL",
+        airspeed: "DELIVERY: 2×10 LB",
+        payload: "20 LB MAX",
+        mode: "MODULAR BAY",
+      },
+    },
+  },
+};
 
 const Work = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("airframe");
 
   useEffect(() => {
     if (!containerRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
-
     gsap.from(".craft-fade", {
       opacity: 0,
       y: 30,
@@ -156,143 +195,102 @@ const Work = () => {
     });
   }, []);
 
+  const content = tabContent[activeTab as keyof typeof tabContent];
+
   return (
     <section
-      id="prototype"
+      id="technology"
       ref={containerRef}
       className="min-h-screen p-6 sm:p-10 md:p-14 lg:p-16 bg-zinc-50 text-zinc-950 border-b border-zinc-200"
     >
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
-        <div>
-          <div className="craft-fade flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-2">
-            <Plane className="w-4 h-4 text-black" />
-            <span>AEROSPACE ARCHITECTURE // PROTOTYPE SYSTEM</span>
-          </div>
-          <h2 className="craft-fade text-[clamp(1.85rem,3.8vw,3.2rem)] font-bold tracking-tight text-zinc-950 font-sans">
-            The K-1 Architecture & Subsystems
-          </h2>
+      <div className="mb-10">
+        <div className="craft-fade flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-2">
+          <Layers className="w-4 h-4 text-black" />
+          <span>DEEP DIVE // TECHNOLOGY &amp; ENGINEERING</span>
         </div>
-
-        <p className="craft-fade max-w-md text-sm text-zinc-600 font-sans">
-          We are in pre-production and assembling our first full-scale hybrid VTOL fixed-wing prototype. Explore the key subsystems.
+        <h2 className="craft-fade text-[clamp(1.85rem,3.8vw,3.2rem)] font-bold tracking-tight text-zinc-950 font-sans">
+          How It Works
+        </h2>
+        <p className="craft-fade max-w-2xl text-sm text-zinc-600 mt-3 font-sans leading-relaxed">
+          Five engineering systems that together enable 30-hour disaster-zone coverage. Each tab is a deep dive into one subsystem.
         </p>
       </div>
 
-      {/* Prototype Cards */}
-      <div className="space-y-8">
-        {prototypeModules.map((item) => (
-          <div
-            key={item.id}
-            className="craft-fade bg-white rounded-xl border border-zinc-200 p-6 sm:p-8 md:p-10 shadow-sm hover:border-zinc-400 transition-all duration-200"
-          >
-            {/* Card Header Bar */}
-            <div className="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-zinc-200">
-              <div className="flex items-baseline gap-4">
-                <span className="text-[clamp(1.8rem,3.5vw,3rem)] font-bold font-mono text-zinc-900">
-                  {item.id}
-                </span>
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold font-sans text-zinc-950 whitespace-nowrap">
-                    {item.name}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs text-zinc-500 font-medium">
-                      {item.category}
-                    </span>
-                    <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-zinc-100 text-zinc-800 border border-zinc-300 font-medium">
-                      {item.stage}
-                    </span>
-                  </div>
-                </div>
-              </div>
+      {/* Tabs */}
+      <div className="craft-fade flex flex-wrap gap-2 mb-8">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all border ${
+                activeTab === tab.id
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400"
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
 
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-black hover:bg-zinc-800 text-white text-xs uppercase tracking-wider font-semibold rounded transition-colors"
-              >
-                <span>PILOT INQUIRY</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
+      {/* Tab Content */}
+      <div className="craft-fade bg-white rounded-xl border border-zinc-200 p-6 sm:p-8 md:p-10 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Left: Text */}
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold font-sans text-zinc-950 mb-3 tracking-tight">
+                {content.title}
+              </h3>
+              <p className="text-base text-zinc-700 leading-relaxed">
+                {content.description}
+              </p>
             </div>
 
-            {/* Main Grid: Description + Media Placeholder + Specs */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
-              {/* Left Column: Description & Specs */}
-              <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
-                <div>
-                  <p className="text-base text-zinc-700 leading-relaxed mb-3">
-                    {item.description}
-                  </p>
-                  <p className="text-xs uppercase tracking-wider font-semibold text-zinc-500">
-                    // {item.tagline}
-                  </p>
-                </div>
+            {/* Key Points */}
+            <ul className="space-y-3 pt-2">
+              {content.points.map((point, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-sm text-zinc-600">
+                  <span className="text-zinc-900 font-bold mt-0.5 shrink-0">›</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
 
-                {/* Specs Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-lg bg-zinc-50 border border-zinc-200">
-                  <div>
-                    <div className="text-[10px] uppercase text-zinc-500 font-semibold">ENDURANCE</div>
-                    <div className="text-sm font-bold text-zinc-900 mt-0.5">
-                      {item.specs.endurance}
-                    </div>
+            {/* Specs Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-lg bg-zinc-50 border border-zinc-200">
+              {content.specs.map((spec, idx) => (
+                <div key={idx}>
+                  <div className="text-[10px] uppercase text-zinc-500 font-semibold">
+                    {spec.label}
                   </div>
-                  <div>
-                    <div className="text-[10px] uppercase text-zinc-500 font-semibold">RANGE</div>
-                    <div className="text-sm font-bold text-zinc-900 mt-0.5">
-                      {item.specs.range}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase text-zinc-500 font-semibold">PAYLOAD</div>
-                    <div className="text-sm font-bold text-zinc-900 mt-0.5">
-                      {item.specs.payload}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase text-zinc-500 font-semibold">AIRSPEED</div>
-                    <div className="text-sm font-bold text-zinc-900 mt-0.5">
-                      {item.specs.speed}
-                    </div>
+                  <div className="text-sm font-bold text-zinc-900 mt-0.5">
+                    {spec.value}
                   </div>
                 </div>
-
-                {/* Subsystem Lists */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                  {item.subsystems.map((group, colIdx) => (
-                    <ul key={colIdx} className="space-y-1.5 text-xs text-zinc-600">
-                      {group.map((sub, rowIdx) => (
-                        <li key={rowIdx} className="flex items-start gap-1.5">
-                          <Check className="w-3.5 h-3.5 text-zinc-900 shrink-0 mt-0.5" />
-                          <span>{sub}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Column: Prototype CAD / Footage Media Placeholder */}
-              <div className="lg:col-span-6 flex flex-col justify-center">
-                <DroneMediaPlaceholder
-                  type={item.media.type}
-                  src={item.media.src}
-                  label={item.media.label}
-                  badge={item.media.badge}
-                  flightData={{
-                    altitude: "PROTOTYPE R&D",
-                    airspeed: item.specs.speed,
-                    payload: item.specs.payload,
-                    mode: item.stage,
-                  }}
-                  aspect="aspect-[16/11]"
-                  className="w-full shadow-lg"
-                  dark={true}
-                />
-              </div>
+              ))}
             </div>
           </div>
-        ))}
+
+          {/* Right: Media */}
+          <div className="lg:col-span-6 flex flex-col justify-center">
+            <DroneMediaPlaceholder
+              type={content.media.type}
+              src={content.media.src}
+              label={content.media.label}
+              badge={content.media.badge}
+              flightData={content.media.flightData}
+              aspect="aspect-[16/11]"
+              className="w-full shadow-lg"
+              dark={true}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

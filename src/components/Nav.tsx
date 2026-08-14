@@ -3,43 +3,57 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import useUserActivity from "@/hooks/useUserActivity";
-import { Plane, Compass, Activity, ChevronRight, X, Sparkles, Layers } from "lucide-react";
+import { Plane, AlertTriangle, Cpu, Map, Shield, Users, Activity, Mail, ChevronRight, X } from "lucide-react";
 
 const navItems = [
   {
     id: 1,
-    title: "Mission & Strategic Imperative",
-    tagline: "Bridging Range vs. Runway Independence",
+    title: "The Problem",
+    tagline: "Why SAR needs a better aircraft",
     link: "#mission",
-    icon: Compass,
+    icon: AlertTriangle,
   },
   {
     id: 2,
-    title: "Project K-1 Architecture",
-    tagline: "Our First Hybrid VTOL Prototype",
-    link: "#prototype",
-    icon: Plane,
+    title: "Technology",
+    tagline: "Airframe, propulsion, power, avionics",
+    link: "#technology",
+    icon: Cpu,
   },
   {
     id: 3,
-    title: "Development Roadmap",
-    tagline: "CFD Simulation to Maiden Flight",
+    title: "Concept of Operations",
+    tagline: "Scout & aid-delivery dual variant",
+    link: "#conops",
+    icon: Map,
+  },
+  {
+    id: 4,
+    title: "Regulatory Pathway",
+    tagline: "FAA path to flight, honest status",
+    link: "#regulatory",
+    icon: Shield,
+  },
+  {
+    id: 5,
+    title: "Team",
+    tagline: "Portland / Beaverton, OR",
+    link: "#team",
+    icon: Users,
+  },
+  {
+    id: 6,
+    title: "Roadmap",
+    tagline: "Milestones & progress log",
     link: "#roadmap",
     icon: Activity,
   },
   {
-    id: 4,
-    title: "Strategic Partnerships",
-    tagline: "SAR & Defense Early Pilot Tracks",
-    link: "#partners",
-    icon: Layers,
-  },
-  {
-    id: 5,
-    title: "Direct Engagement",
-    tagline: "Founders, Pilots & Engineering Roles",
+    id: 7,
+    title: "Get Involved",
+    tagline: "Partners, funders, press",
     link: "#contact",
-    icon: Sparkles,
+    icon: Mail,
   },
 ];
 
@@ -80,7 +94,7 @@ const Nav = () => {
               className="text-white font-semibold tracking-wider uppercase flex items-center gap-2"
             >
               <span>KINTON AEROSPACE</span>
-              <span className="text-zinc-500 hidden sm:inline">| HYBRID FLIGHT LAB</span>
+              <span className="text-zinc-500 hidden sm:inline">| SAR &amp; DISASTER RESPONSE</span>
             </motion.div>
 
             {/* Hover State */}
@@ -104,7 +118,7 @@ const Nav = () => {
           </div>
         </div>
 
-        {/* Right Section: Briefing CTA & Menu Toggle */}
+        {/* Right Section */}
         <div className="flex items-center gap-2.5">
           <a
             href="#contact"
@@ -114,7 +128,7 @@ const Nav = () => {
             }}
             className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded bg-white text-black hover:bg-zinc-200 transition-colors"
           >
-            <span>CONTACT</span>
+            <span>PARTNER</span>
           </a>
 
           <button
@@ -151,11 +165,11 @@ const Nav = () => {
                   KINTON AEROSPACE SYSTEMS
                 </h3>
                 <p className="text-[11px] text-zinc-400 font-sans">
-                  PRE-PRODUCTION FLIGHT LAB
+                  HYBRID-ELECTRIC SAR FIXED-WING UAS
                 </p>
               </div>
               <div className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-zinc-900 text-white border border-zinc-700 font-medium">
-                ALPHA CRAFT
+                K-1 ALPHA
               </div>
             </div>
 
@@ -198,7 +212,7 @@ const Nav = () => {
                 onClick={(e) => handleScrollTo(e, "#contact")}
                 className="text-white hover:underline flex items-center gap-1 font-semibold uppercase tracking-wider text-[11px]"
               >
-                ENGAGE FOUNDING TEAM →
+                PARTNER WITH US →
               </a>
             </div>
           </motion.div>
