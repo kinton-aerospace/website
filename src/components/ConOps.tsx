@@ -19,7 +19,7 @@ const steps = [
     icon: Search,
     title: "Scout Aircraft Launches",
     description:
-      "The scout variant launches and begins a long-endurance search pattern over the affected area, streaming thermal and EO imagery back to responders in real time.",
+      "The scout variant launches, transits to destination, then begins a long-endurance search pattern over the affected area, streaming thermal and EO imagery back to responders in real time.",
     note: "The scout carries a heated nadir EO/thermal camera. It trades payload weight for extra fuel — maximum loiter time is the priority.",
   },
   {

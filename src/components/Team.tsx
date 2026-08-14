@@ -12,31 +12,7 @@ const teamMembers = [
     location: "Beaverton, OR",
     credentials: ["Part 107 Certified Remote Pilot", "CAD & Structural Design", "Electrical Engineering & PCB Design", "Project management & systems integration"],
     note: "Bio coming soon",
-    initials: "KA",
-  },
-  {
-    name: "Teammate",
-    role: "Engineering",
-    location: "Portland / Beaverton, OR",
-    credentials: [],
-    note: "Bio coming soon",
-    initials: "T2",
-  },
-  {
-    name: "Teammate",
-    role: "Engineering",
-    location: "Portland / Beaverton, OR",
-    credentials: [],
-    note: "Bio coming soon",
-    initials: "T3",
-  },
-  {
-    name: "Teammate",
-    role: "Engineering",
-    location: "Portland / Beaverton, OR",
-    credentials: [],
-    note: "Bio coming soon",
-    initials: "T4",
+    initials: "ROSD",
   },
 ];
 
